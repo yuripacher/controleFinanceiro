@@ -1,2 +1,5 @@
 # controleFinanceiro
-Aplicativo para controle financeiro
+# Aplicativo para controle financeiro
+# 
+#
+# Linguagem utilizada Java
