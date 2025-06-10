@@ -1,25 +1,24 @@
-/* Gerencia persistência CSV */
 package negocio;
 
 import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Classe responsável pela persistência dos dados em arquivos CSV.
- * Gerencia a leitura e escrita de receitas e despesas.
+ * Classe responsável pela persistência dos dados em arquivos.
+ * Gerencia a leitura e escrita de receitas e despesas usando streams.
  * 
- * @author Equipe
+ * @author Iniciante
  * @version 1.0
  */
 public class GerenciadorArquivos {
     
+    // Constantes para os arquivos
     private static final String PASTA_DADOS = "dados";
-    private static final String ARQUIVO_RECEITAS = "receitas.csv";
-    private static final String ARQUIVO_DESPESAS = "despesas.csv";
+    private static final String ARQUIVO_RECEITAS = "receitas.txt";
+    private static final String ARQUIVO_DESPESAS = "despesas.txt";
     private static final DateTimeFormatter FORMATO_DATA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     
     /**
@@ -40,47 +39,61 @@ public class GerenciadorArquivos {
     }
     
     /**
-     * Salva a lista de receitas no arquivo CSV.
+     * Salva a lista de receitas no arquivo usando BufferedWriter.
      * 
      * @param receitas Lista de receitas a serem salvas
      * @throws IOException Se ocorrer erro na escrita do arquivo
      */
     public void salvarReceitas(List<Receita> receitas) throws IOException {
         File arquivo = new File(PASTA_DADOS, ARQUIVO_RECEITAS);
+        FileOutputStream fos = new FileOutputStream(arquivo);
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(fos));
         
-        try (PrintWriter writer = new PrintWriter(new FileWriter(arquivo))) {
-            // Cabeçalho do CSV
-            writer.println("id,descricao,valor,data,categoria");
-            
-            // Dados das receitas
+        try {
+            // Salva cada receita
             for (Receita receita : receitas) {
-                writer.println(receita.toCSV());
+                String linha = receita.getDescricao() + ";" + 
+                              receita.getValor() + ";" + 
+                              receita.getData().format(FORMATO_DATA) + ";" + 
+                              receita.getTipo();
+                writer.write(linha);
+                writer.newLine();
             }
+        } finally {
+            writer.close();
+            fos.close();
         }
     }
     
     /**
-     * Salva a lista de despesas no arquivo CSV.
+     * Salva a lista de despesas no arquivo usando BufferedWriter.
      * 
      * @param despesas Lista de despesas a serem salvas
      * @throws IOException Se ocorrer erro na escrita do arquivo
      */
     public void salvarDespesas(List<Despesa> despesas) throws IOException {
         File arquivo = new File(PASTA_DADOS, ARQUIVO_DESPESAS);
+        FileOutputStream fos = new FileOutputStream(arquivo);
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(fos));
         
-        try (PrintWriter writer = new PrintWriter(new FileWriter(arquivo))) {
-            // Cabeçalho do CSV
-            writer.println("id,descricao,valor,data,categoria");
-            
-            // Dados das despesas
+        try {
+            // Salva cada despesa
             for (Despesa despesa : despesas) {
-                writer.println(despesa.toCSV());
+                String linha = despesa.getDescricao() + ";" + 
+                              despesa.getValor() + ";" + 
+                              despesa.getData().format(FORMATO_DATA) + ";" + 
+                              despesa.getTipo();
+                writer.write(linha);
+                writer.newLine();
             }
+        } finally {
+            writer.close();
+            fos.close();
         }
     }
     
     /**
-     * Carrega a lista de receitas do arquivo CSV.
+     * Carrega a lista de receitas do arquivo usando BufferedReader.
      * 
      * @return Lista de receitas carregadas
      * @throws IOException Se ocorrer erro na leitura do arquivo
@@ -93,9 +106,11 @@ public class GerenciadorArquivos {
             return receitas; // Retorna lista vazia se arquivo não existe
         }
         
-        try (BufferedReader reader = new BufferedReader(new FileReader(arquivo))) {
-            String linha = reader.readLine(); // Pula o cabeçalho
-            
+        FileInputStream fis = new FileInputStream(arquivo);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(fis));
+        
+        try {
+            String linha;
             while ((linha = reader.readLine()) != null) {
                 try {
                     Receita receita = parseReceita(linha);
@@ -103,16 +118,19 @@ public class GerenciadorArquivos {
                         receitas.add(receita);
                     }
                 } catch (Exception e) {
-                    System.err.println("Erro ao processar linha: " + linha + " - " + e.getMessage());
+                    System.err.println("Erro ao processar linha: " + linha);
                 }
             }
+        } finally {
+            reader.close();
+            fis.close();
         }
         
         return receitas;
     }
     
     /**
-     * Carrega a lista de despesas do arquivo CSV.
+     * Carrega a lista de despesas do arquivo usando BufferedReader.
      * 
      * @return Lista de despesas carregadas
      * @throws IOException Se ocorrer erro na leitura do arquivo
@@ -125,9 +143,11 @@ public class GerenciadorArquivos {
             return despesas; // Retorna lista vazia se arquivo não existe
         }
         
-        try (BufferedReader reader = new BufferedReader(new FileReader(arquivo))) {
-            String linha = reader.readLine(); // Pula o cabeçalho
-            
+        FileInputStream fis = new FileInputStream(arquivo);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(fis));
+        
+        try {
+            String linha;
             while ((linha = reader.readLine()) != null) {
                 try {
                     Despesa despesa = parseDespesa(linha);
@@ -135,18 +155,21 @@ public class GerenciadorArquivos {
                         despesas.add(despesa);
                     }
                 } catch (Exception e) {
-                    System.err.println("Erro ao processar linha: " + linha + " - " + e.getMessage());
+                    System.err.println("Erro ao processar linha: " + linha);
                 }
             }
+        } finally {
+            reader.close();
+            fis.close();
         }
         
         return despesas;
     }
     
     /**
-     * Converte uma linha CSV em objeto Receita.
+     * Converte uma linha do arquivo em objeto Receita.
      * 
-     * @param linha Linha do CSV
+     * @param linha Linha do arquivo
      * @return Objeto Receita ou null se erro
      */
     private Receita parseReceita(String linha) {
@@ -154,28 +177,27 @@ public class GerenciadorArquivos {
             return null;
         }
         
-        String[] campos = linha.split(",", -1);
-        if (campos.length < 5) {
+        String[] campos = linha.split(";");
+        if (campos.length < 4) {
             return null;
         }
         
         try {
-            int id = Integer.parseInt(campos[0]);
-            String descricao = campos[1];
-            double valor = Double.parseDouble(campos[2]);
-            LocalDate data = LocalDate.parse(campos[3], FORMATO_DATA);
-            TipoReceita tipo = TipoReceita.fromString(campos[4]);
+            String descricao = campos[0];
+            double valor = Double.parseDouble(campos[1]);
+            LocalDate data = LocalDate.parse(campos[2], FORMATO_DATA);
+            String tipo = campos[3];
             
-            return new Receita(id, descricao, valor, data, tipo);
-        } catch (NumberFormatException | DateTimeParseException e) {
+            return new Receita(descricao, valor, data, tipo);
+        } catch (Exception e) {
             return null;
         }
     }
     
     /**
-     * Converte uma linha CSV em objeto Despesa.
+     * Converte uma linha do arquivo em objeto Despesa.
      * 
-     * @param linha Linha do CSV
+     * @param linha Linha do arquivo
      * @return Objeto Despesa ou null se erro
      */
     private Despesa parseDespesa(String linha) {
@@ -183,20 +205,19 @@ public class GerenciadorArquivos {
             return null;
         }
         
-        String[] campos = linha.split(",", -1);
-        if (campos.length < 5) {
+        String[] campos = linha.split(";");
+        if (campos.length < 4) {
             return null;
         }
         
         try {
-            int id = Integer.parseInt(campos[0]);
-            String descricao = campos[1];
-            double valor = Double.parseDouble(campos[2]);
-            LocalDate data = LocalDate.parse(campos[3], FORMATO_DATA);
-            TipoDespesa tipo = TipoDespesa.fromString(campos[4]);
+            String descricao = campos[0];
+            double valor = Double.parseDouble(campos[1]);
+            LocalDate data = LocalDate.parse(campos[2], FORMATO_DATA);
+            String tipo = campos[3];
             
-            return new Despesa(id, descricao, valor, data, tipo);
-        } catch (NumberFormatException | DateTimeParseException e) {
+            return new Despesa(descricao, valor, data, tipo);
+        } catch (Exception e) {
             return null;
         }
     }
