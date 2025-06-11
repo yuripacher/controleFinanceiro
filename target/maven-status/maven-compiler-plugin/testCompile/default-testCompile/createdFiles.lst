@@ -1,0 +1,5 @@
+ex\controlefinanceiro\model\CategoriasDespesas.class
+ex\controlefinanceiro\model\Receita.class
+ex\controlefinanceiro\model\CategoriasReceitas.class
+ex\controlefinanceiro\model\ControleFinanceiroTest.class
+ex\controlefinanceiro\model\Despesa.class
