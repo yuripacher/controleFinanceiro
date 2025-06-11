@@ -69,7 +69,7 @@ public class Lancamento {
      */
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        return "Descrição: " + descricao + 
+        return "Descricao: " + descricao + 
                " | Valor: R$ " + valor + 
                " | Data: " + data.format(formatter);
     }
