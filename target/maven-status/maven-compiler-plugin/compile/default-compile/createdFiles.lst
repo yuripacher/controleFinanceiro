@@ -5,6 +5,7 @@ ex\controlefinanceiro\view\TelaInicio$4.class
 ex\controlefinanceiro\model\Main.class
 ex\controlefinanceiro\model\CategoriasDespesas.class
 ex\controlefinanceiro\model\ControleFinanceiro.class
+ex\controlefinanceiro\view\TelaInicio$7.class
 ex\controlefinanceiro\view\TelaInicio$3.class
 ex\controlefinanceiro\view\TelaExtrato$1.class
 ex\controlefinanceiro\model\GerenciadorArquivos.class
