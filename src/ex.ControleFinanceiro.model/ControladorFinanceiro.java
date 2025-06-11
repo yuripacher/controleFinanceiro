@@ -1,4 +1,9 @@
-package negocio;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package ex.controlefinanceiro.model;
+
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -10,7 +15,7 @@ import java.util.List;
  * 
  * @author IMKB e YPR
  */
-public class ControladorFinanceiro {
+public class ControleFinanceiro {
     
     // Atributos privados
     private List<Receita> receitas;
@@ -20,9 +25,9 @@ public class ControladorFinanceiro {
      * Construtor da classe ControladorFinanceiro.
      * Inicializa as listas vazias.
      */
-    public ControladorFinanceiro() {
-        setReceitas(new ArrayList<>());
-        setDespesas(new ArrayList<>());
+    public ControleFinanceiro() {
+        setReceita(new ArrayList<>());
+        setDespesa(new ArrayList<>());
     }
     
     /**
@@ -34,7 +39,7 @@ public class ControladorFinanceiro {
      * @param tipo Tipo da receita
      * @return true se a receita foi adicionada com sucesso
      */
-    public boolean incluirReceita(String descricao, double valor, LocalDate data, String tipo) {
+    public boolean incluirReceita(String descricao, double valor, LocalDate data, CategoriasReceitas tipo) {
         if (descricao == null || descricao.trim().isEmpty()) {
             return false;
         }
@@ -59,7 +64,7 @@ public class ControladorFinanceiro {
      * @param tipo Tipo da despesa
      * @return true se a despesa foi adicionada com sucesso
      */
-    public boolean incluirDespesa(String descricao, double valor, LocalDate data, String tipo) {
+    public boolean incluirDespesa(String descricao, double valor, LocalDate data, CategoriasDespesas tipo) {
         if (descricao == null || descricao.trim().isEmpty()) {
             return false;
         }
@@ -178,4 +183,12 @@ public class ControladorFinanceiro {
         }
         return total;
     }
+
+    private void setReceita(List<Receita> receitas) {
+        this.receitas = receitas;
+    }
+
+    private void setDespesa(List<Despesa> despesas) {
+        this.despesas = despesas;
+}
 }

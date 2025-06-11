@@ -1,4 +1,8 @@
-package negocio;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package ex.controlefinanceiro.model;
 
 import java.io.*;
 import java.time.LocalDate;
@@ -187,8 +191,8 @@ public class GerenciadorArquivos {
             double valor = Double.parseDouble(campos[1]);
             LocalDate data = LocalDate.parse(campos[2], FORMATO_DATA);
             String tipo = campos[3];
-            
-            return new Receita(descricao, valor, data, tipo);
+            CategoriasReceitas categoria = CategoriasReceitas.valueOf(tipo);
+            return new Receita(descricao, valor, data, categoria);
         } catch (Exception e) {
             return null;
         }
@@ -215,9 +219,9 @@ public class GerenciadorArquivos {
             double valor = Double.parseDouble(campos[1]);
             LocalDate data = LocalDate.parse(campos[2], FORMATO_DATA);
             String tipo = campos[3];
-            
-            return new Despesa(descricao, valor, data, tipo);
-        } catch (Exception e) {
+            CategoriasDespesas categoria = CategoriasDespesas.valueOf(tipo);
+            return new Despesa(descricao, valor, data, categoria);
+        }catch (Exception e) {
             return null;
         }
     }

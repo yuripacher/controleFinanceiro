@@ -1,4 +1,9 @@
-package negocio;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package ex.controlefinanceiro.model;
+
 
 import java.time.LocalDate;
 
@@ -11,7 +16,7 @@ import java.time.LocalDate;
 public class Receita extends Lancamento {
     
     // Atributo privado para o tipo de receita
-    private String tipo;
+    private CategoriasReceitas tipo;
     
     /**
      * Construtor da classe Receita.
@@ -21,18 +26,18 @@ public class Receita extends Lancamento {
      * @param data Data da receita
      * @param tipo Tipo da receita (ex: "Salário", "Freelance", "Vendas")
      */
-    public Receita(String descricao, double valor, LocalDate data, String tipo) {
+    public Receita(String descricao, double valor, LocalDate data, CategoriasReceitas tipo) {
         super(descricao, valor, data);
         setTipo(tipo);
     }
     
     // Getter para tipo
-    public String getTipo() {
+    public CategoriasReceitas getTipo() {
         return tipo;
     }
     
     // Setter para tipo
-    public void setTipo(String tipo) {
+    public void setTipo(CategoriasReceitas tipo) {
         this.tipo = tipo;
     }
     
