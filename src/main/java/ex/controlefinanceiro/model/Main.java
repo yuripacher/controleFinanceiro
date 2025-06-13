@@ -1,141 +1,220 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package ex.controlefinanceiro.model;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
-
+import java.util.Scanner;
 
 /**
- * Classe principal para testar o sistema de controle financeiro.
- * Demonstra todas as funcionalidades implementadas.
- * 
- * @author Teste do Sistema
+ * Classe para testar o GerenciadorArquivos
  */
 public class Main {
     
     public static void main(String[] args) {
-        // Criando uma instância do controlador financeiro
-        ControleFinanceiro controlador = new ControleFinanceiro();
+        System.out.println("=== TESTE DO GERENCIADOR DE ARQUIVOS ===\n");
+                
+
+        // Criar instância do gerenciador
+        GerenciadorArquivos gerenciador = new GerenciadorArquivos();
         
-        System.out.println("=== SISTEMA DE CONTROLE FINANCEIRO ===\n");
+        // Testar status inicial
+        System.out.println("1. STATUS INICIAL:");
+        System.out.println(gerenciador.getStatusSistema());
         
+        // Testar criação e adição de receitas
+        testarReceitas(gerenciador);
         
-        // Testando inclusão de receitas;
-        System.out.println("1. ADICIONANDO RECEITAS:");
-        System.out.println("------------------------");
+        // Testar criação e adição de despesas
+        testarDespesas(gerenciador);
         
-        boolean receita1 = controlador.incluirReceita("Salario", 5000.00, LocalDate.now(), CategoriasReceitas.SALARIO);
-        boolean receita2 = controlador.incluirReceita("Freelance", 1200.00, LocalDate.of(2024, 6, 15), CategoriasReceitas.OUTRAS_RECEITAS);
-        boolean receita3 = controlador.incluirReceita("Vendas", 800.00, LocalDate.of(2024, 6, 10), CategoriasReceitas.OUTRAS_RECEITAS);
+        // Testar carregamento dos dados
+        testarCarregamento(gerenciador);
         
-        System.out.println("Receita 1 adicionada: " + (receita1 ? "V Sucesso" : "X Falhou"));
-        System.out.println("Receita 2 adicionada: " + (receita2 ? "V Sucesso" : "X Falhou"));
-        System.out.println("Receita 3 adicionada: " + (receita3 ? "V Sucesso" : "X Falhou"));
+        // Status final
+        System.out.println("\n=== STATUS FINAL ===");
+        System.out.println(gerenciador.getStatusSistema());
         
-        // Testando inclusão de despesas
-        System.out.println("\n2. ADICIONANDO DESPESAS:");
-        System.out.println("------------------------");
+        // Teste interativo (opcional)
+        testeInterativo(gerenciador);
+    }
+    
+    /**
+     * Testa a criação e persistência de receitas
+     */
+    private static void testarReceitas(GerenciadorArquivos gerenciador) {
+        System.out.println("\n2. TESTANDO RECEITAS:");
         
-        boolean despesa1 = controlador.incluirDespesa("Supermercado", 300.00, LocalDate.now(), CategoriasDespesas.ALIMENTACAO);
-        boolean despesa2 = controlador.incluirDespesa("Gasolina", 150.00, LocalDate.of(2024, 6, 12), CategoriasDespesas.TRANSPORTE);
-        boolean despesa3 = controlador.incluirDespesa("Aluguel", 1200.00, LocalDate.of(2024, 6, 1), CategoriasDespesas.RESIDENCIA);
-        boolean despesa4 = controlador.incluirDespesa("Cinema", 50.00, LocalDate.of(2024, 6, 8), CategoriasDespesas.ENTRETENIMENTO);
+        try {
+            // Criar receitas de teste
+            Receita receita1 = new Receita(5000.0, LocalDate.now(), CategoriasReceitas.SALARIO);
+            Receita receita2 = new Receita(1500.0, LocalDate.now().minusDays(5), CategoriasReceitas.FREELANCE);
+            Receita receita3 = new Receita(800.0, LocalDate.now().minusDays(10), CategoriasReceitas.VENDAS);
+            
+            // Adicionar receitas
+            gerenciador.adicionarReceita(receita1);
+            gerenciador.adicionarReceita(receita2);
+            gerenciador.adicionarReceita(receita3);
+            
+            System.out.println("✓ Receitas adicionadas com sucesso!");
+            
+        } catch (IOException e) {
+            System.err.println("✗ Erro ao adicionar receitas: " + e.getMessage());
+        }
+    }
+    
+    /**
+     * Testa a criação e persistência de despesas
+     */
+    private static void testarDespesas(GerenciadorArquivos gerenciador) {
+        System.out.println("\n3. TESTANDO DESPESAS:");
         
-        System.out.println("Despesa 1 adicionada: " + (despesa1 ? "V Sucesso" : "X Falhou"));
-        System.out.println("Despesa 2 adicionada: " + (despesa2 ? "V Sucesso" : "X Falhou"));
-        System.out.println("Despesa 3 adicionada: " + (despesa3 ? "V Sucesso" : "X Falhou"));
-        System.out.println("Despesa 4 adicionada: " + (despesa4 ? "V Sucesso" : "X Falhou"));
+        try {
+            // Criar despesas de teste
+            Despesa despesa1 = new Despesa(350.0, LocalDate.now(), CategoriasDespesas.ALIMENTACAO);
+            Despesa despesa2 = new Despesa(200.0, LocalDate.now().minusDays(2), CategoriasDespesas.TRANSPORTE);
+            Despesa despesa3 = new Despesa(80.0, LocalDate.now().minusDays(3), CategoriasDespesas.ENTRETENIMENTO);
+            Despesa despesa4 = new Despesa(150.0, LocalDate.now().minusDays(7), CategoriasDespesas.RESIDENCIA);
+            
+            // Adicionar despesas
+            gerenciador.adicionarDespesa(despesa1);
+            gerenciador.adicionarDespesa(despesa2);
+            gerenciador.adicionarDespesa(despesa3);
+            gerenciador.adicionarDespesa(despesa4);
+            
+            System.out.println("✓ Despesas adicionadas com sucesso!");
+            
+        } catch (IOException e) {
+            System.err.println("✗ Erro ao adicionar despesas: " + e.getMessage());
+        }
+    }
+    
+    /**
+     * Testa o carregamento dos dados salvos
+     */
+    private static void testarCarregamento(GerenciadorArquivos gerenciador) {
+        System.out.println("\n4. TESTANDO CARREGAMENTO:");
         
-        
-        // Testando validações (valores inválidos)
-        System.out.println("\n3. TESTANDO VALIDAÇÕES:");
-        System.out.println("-----------------------");
-        
-        boolean receitaInvalida1 = controlador.incluirReceita("", 1000.00, LocalDate.now(), CategoriasReceitas.SALARIO);
-        boolean receitaInvalida2 = controlador.incluirReceita("Teste", -100.00, LocalDate.now(), CategoriasReceitas.SALARIO);
-        boolean receitaInvalida3 = controlador.incluirReceita("Teste", 1000.00, null, CategoriasReceitas.SALARIO);
-        
-        System.out.println("Receita com descricao vazia: " + (receitaInvalida1 ? "V Passou" : "X Rejeitada corretamente"));
-        System.out.println("Receita com valor negativo: " + (receitaInvalida2 ? "V Passou" : "X Rejeitada corretamente"));
-        System.out.println("Receita com data nula: " + (receitaInvalida3 ? "V Passou" : "X Rejeitada corretamente"));
-        
-        // Listando todas as receitas
-        System.out.println("\n4. LISTANDO RECEITAS:");
-        System.out.println("---------------------");
-        
-        List<Receita> receitas = controlador.listarReceitas();
-        if (receitas.isEmpty()) {
-            System.out.println("Nenhuma receita cadastrada.");
-        } else {
+        try {
+            // Carregar receitas
+            List<Receita> receitas = gerenciador.carregarReceitas();
+            System.out.println("✓ Receitas carregadas: " + receitas.size());
+            
+            System.out.println("\n--- RECEITAS CARREGADAS ---");
             for (int i = 0; i < receitas.size(); i++) {
                 System.out.println((i + 1) + ". " + receitas.get(i));
             }
-        }
-        
-        // Listando todas as despesas
-        System.out.println("\n5. LISTANDO DESPESAS:");
-        System.out.println("---------------------");
-        
-        List<Despesa> despesas = controlador.listarDespesas();
-        if (despesas.isEmpty()) {
-            System.out.println("Nenhuma despesa cadastrada.");
-        } else {
+            
+            // Carregar despesas
+            List<Despesa> despesas = gerenciador.carregarDespesas();
+            System.out.println("\n✓ Despesas carregadas: " + despesas.size());
+            
+            System.out.println("\n--- DESPESAS CARREGADAS ---");
             for (int i = 0; i < despesas.size(); i++) {
                 System.out.println((i + 1) + ". " + despesas.get(i));
             }
+            
+            // Calcular totais
+            double totalReceitas = receitas.stream().mapToDouble(Receita::getValor).sum();
+            double totalDespesas = despesas.stream().mapToDouble(Despesa::getValor).sum();
+            double saldo = totalReceitas - totalDespesas;
+            
+            System.out.println("\n--- RESUMO FINANCEIRO ---");
+            System.out.printf("Total de Receitas: R$ %.2f%n", totalReceitas);
+            System.out.printf("Total de Despesas: R$ %.2f%n", totalDespesas);
+            System.out.printf("Saldo: R$ %.2f%n", saldo);
+            
+        } catch (IOException e) {
+            System.err.println("✗ Erro ao carregar dados: " + e.getMessage());
         }
+    }
+    
+    
+    
+    
+    /**
+     * Teste interativo para o usuário
+     */
+    private static void testeInterativo(GerenciadorArquivos gerenciador) {
+        Scanner scanner = new Scanner(System.in);
         
-        // Mostrando resumo financeiro
-        System.out.println("\n6. RESUMO FINANCEIRO:");
-        System.out.println("---------------------");
+        System.out.println("\n=== TESTE INTERATIVO ===");
+        System.out.println("Deseja adicionar uma receita ou despesa? (r/d/n): ");
+        String opcao = scanner.nextLine().toLowerCase();
         
-        double totalReceitas = controlador.getValorTotalReceitas();
-        double totalDespesas = controlador.getValorTotalDespesas();
-        double saldo = controlador.consultarSaldo();
-        
-        System.out.printf("Total de Receitas: R$ %.2f%n", totalReceitas);
-        System.out.printf("Total de Despesas: R$ %.2f%n", totalDespesas);
-        System.out.printf("Saldo Atual: R$ %.2f%n", saldo);
-        
-        System.out.println("\nQuantidade de lancamentos:");
-        System.out.println("- Receitas cadastradas: " + controlador.getTotalReceitas());
-        System.out.println("- Despesas cadastradas: " + controlador.getTotalDespesas());
-        
-        // Testando remoção
-        System.out.println("\n7. TESTANDO REMOCAO:");
-        System.out.println("--------------------");
-        
-        if (!receitas.isEmpty()) {
-            Receita receitaParaRemover = receitas.get(0);
-            boolean removidaReceita = controlador.removerReceita(receitaParaRemover);
-            System.out.println("Receita removida: " + (removidaReceita ? "V Sucesso" : "X Falhou"));
-            System.out.println("Nova quantidade de receitas: " + controlador.getTotalReceitas());
-        }
-        
-        if (!despesas.isEmpty()) {
-            Despesa despesaParaRemover = despesas.get(0);
-            boolean removidaDespesa = controlador.removerDespesa(despesaParaRemover);
-            System.out.println("Despesa removida: " + (removidaDespesa ? "V Sucesso" : "X Falhou"));
-            System.out.println("Nova quantidade de despesas: " + controlador.getTotalDespesas());
-        }
-        
-        // Saldo final após remoções
-        System.out.println("\n8. SALDO FINAL:");
-        System.out.println("---------------");
-        double saldoFinal = controlador.consultarSaldo();
-        System.out.printf("Saldo apos remocoes: R$ %.2f%n", saldoFinal);
-        
-        if (saldoFinal > 0) {
-            System.out.println("V Situacao financeira: POSITIVA");
-        } else if (saldoFinal < 0) {
-            System.out.println("A Situacao financeira: NEGATIVA");
+        if (opcao.equals("r")) {
+            adicionarReceitaInterativa(gerenciador, scanner);
+        } else if (opcao.equals("d")) {
+            adicionarDespesaInterativa(gerenciador, scanner);
         } else {
-            System.out.println("= Situacao financeira: EQUILIBRADA");
+            System.out.println("Teste finalizado!");
         }
-        
-        System.out.println("\n=== FIM DOS TESTES ===");
+    }
+    
+    /**
+     * Adiciona receita de forma interativa
+     */
+    private static void adicionarReceitaInterativa(GerenciadorArquivos gerenciador, Scanner scanner) {
+        try {
+            System.out.print("Digite a descrição da receita: ");
+            String descricao = scanner.nextLine();
+            
+            System.out.print("Digite o valor: R$ ");
+            double valor = Double.parseDouble(scanner.nextLine());
+            
+            System.out.println("Categorias disponíveis:");
+            CategoriasReceitas[] categorias = CategoriasReceitas.values();
+            for (int i = 0; i < categorias.length; i++) {
+                System.out.println((i + 1) + ". " + categorias[i]);
+            }
+            
+            System.out.print("Escolha a categoria (1-" + categorias.length + "): ");
+            int escolha = Integer.parseInt(scanner.nextLine()) - 1;
+            
+            if (escolha >= 0 && escolha < categorias.length) {
+                Receita receita = new Receita(valor, LocalDate.now(), categorias[escolha]);
+                gerenciador.adicionarReceita(receita);
+                System.out.println("✓ Receita adicionada: " + receita);
+            } else {
+                System.out.println("✗ Categoria inválida!");
+            }
+            
+        } catch (Exception e) {
+            System.err.println("✗ Erro: " + e.getMessage());
+        }
+    }
+    
+    
+    
+    /**
+     * Adiciona despesa de forma interativa
+     */
+    private static void adicionarDespesaInterativa(GerenciadorArquivos gerenciador, Scanner scanner) {
+        try {
+            System.out.print("Digite a descrição da despesa: ");
+            String descricao = scanner.nextLine();
+            
+            System.out.print("Digite o valor: R$ ");
+            double valor = Double.parseDouble(scanner.nextLine());
+            
+            System.out.println("Categorias disponíveis:");
+            CategoriasDespesas[] categorias = CategoriasDespesas.values();
+            for (int i = 0; i < categorias.length; i++) {
+                System.out.println((i + 1) + ". " + categorias[i]);
+            }
+            
+            System.out.print("Escolha a categoria (1-" + categorias.length + "): ");
+            int escolha = Integer.parseInt(scanner.nextLine()) - 1;
+            
+            if (escolha >= 0 && escolha < categorias.length) {
+                Despesa despesa = new Despesa(valor, LocalDate.now(), categorias[escolha]);
+                gerenciador.adicionarDespesa(despesa);
+                System.out.println("✓ Despesa adicionada: " + despesa);
+            } else {
+                System.out.println("✗ Categoria inválida!");
+            }
+            
+        } catch (Exception e) {
+            System.err.println("✗ Erro: " + e.getMessage());
+        }
     }
 }

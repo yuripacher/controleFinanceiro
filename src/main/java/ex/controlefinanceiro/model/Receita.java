@@ -3,8 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package ex.controlefinanceiro.model;
-
-
 import java.time.LocalDate;
 
 /**
@@ -21,13 +19,12 @@ public class Receita extends Lancamento {
     /**
      * Construtor da classe Receita.
      * 
-     * @param descricao Descrição da receita
      * @param valor Valor da receita
      * @param data Data da receita
      * @param tipo Tipo da receita (ex: "Salário", "Freelance", "Vendas")
      */
-    public Receita(String descricao, double valor, LocalDate data, CategoriasReceitas tipo) {
-        super(descricao, valor, data);
+    public Receita(double valor, LocalDate data, CategoriasReceitas tipo) {
+        super(valor, data);
         setTipo(tipo);
     }
     

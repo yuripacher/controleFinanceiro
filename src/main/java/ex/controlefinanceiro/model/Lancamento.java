@@ -3,45 +3,30 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package ex.controlefinanceiro.model;
-
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 /**
- * Classe que representa um lançamento financeiro simples.
- * Contém apenas os dados básicos: descrição, valor e data.
+ * Classe que representa um lançamento financeiro.
+ * Contém valor e data do lançamento.
  * 
  * @author MKB e YPR
  */
 public class Lancamento {
     
     // Atributos privados
-    private String descricao;
     private double valor;
     private LocalDate data;
     
     /**
      * Construtor da classe Lancamento.
      * 
-     * @param descricao Descrição do lançamento
      * @param valor Valor do lançamento
      * @param data Data do lançamento
      */
-    public Lancamento(String descricao, double valor, LocalDate data) {
-        setDescricao(descricao);
+    public Lancamento(double valor, LocalDate data) {
         setValor(valor);
         setData(data);
-    }
-    
-    // Getter para descrição
-    public String getDescricao() {
-        return descricao;
-    }
-    
-    // Setter para descrição
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
     }
     
     // Getter para valor
@@ -69,8 +54,7 @@ public class Lancamento {
      */
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        return "Descricao: " + descricao + 
-               " | Valor: R$ " + valor + 
+        return "Valor: R$ " + valor + 
                " | Data: " + data.format(formatter);
     }
 }

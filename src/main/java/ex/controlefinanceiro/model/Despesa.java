@@ -1,10 +1,9 @@
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package ex.controlefinanceiro.model;
-
-
 import java.time.LocalDate;
 
 /**
@@ -21,13 +20,12 @@ public class Despesa extends Lancamento {
     /**
      * Construtor da classe Despesa.
      * 
-     * @param descricao Descrição da despesa
      * @param valor Valor da despesa
      * @param data Data da despesa
      * @param tipo Tipo da despesa (ex: "Alimentação", "Transporte", "Lazer")
      */
-    public Despesa(String descricao, double valor, LocalDate data, CategoriasDespesas tipo) {
-        super(descricao, valor, data);
+    public Despesa(double valor, LocalDate data, CategoriasDespesas tipo) {
+        super(valor, data);
         setTipo(tipo);
     }
     

@@ -4,7 +4,6 @@
  */
 package ex.controlefinanceiro.model;
 
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,16 +32,12 @@ public class ControleFinanceiro {
     /**
      * Adiciona uma nova receita ao sistema.
      * 
-     * @param descricao Descrição da receita
      * @param valor Valor da receita
      * @param data Data da receita
      * @param tipo Tipo da receita
      * @return true se a receita foi adicionada com sucesso
      */
-    public boolean incluirReceita(String descricao, double valor, LocalDate data, CategoriasReceitas tipo) {
-        if (descricao == null || descricao.trim().isEmpty()) {
-            return false;
-        }
+    public boolean incluirReceita(double valor, LocalDate data, CategoriasReceitas tipo) {
         if (valor <= 0) {
             return false;
         }
@@ -50,7 +45,7 @@ public class ControleFinanceiro {
             return false;
         }
         
-        Receita receita = new Receita(descricao.trim(), valor, data, tipo);
+        Receita receita = new Receita(valor, data, tipo);
         receitas.add(receita);
         return true;
     }
@@ -58,16 +53,12 @@ public class ControleFinanceiro {
     /**
      * Adiciona uma nova despesa ao sistema.
      * 
-     * @param descricao Descrição da despesa
      * @param valor Valor da despesa
      * @param data Data da despesa
      * @param tipo Tipo da despesa
      * @return true se a despesa foi adicionada com sucesso
      */
-    public boolean incluirDespesa(String descricao, double valor, LocalDate data, CategoriasDespesas tipo) {
-        if (descricao == null || descricao.trim().isEmpty()) {
-            return false;
-        }
+    public boolean incluirDespesa(double valor, LocalDate data, CategoriasDespesas tipo) {
         if (valor <= 0) {
             return false;
         }
@@ -75,7 +66,7 @@ public class ControleFinanceiro {
             return false;
         }
         
-        Despesa despesa = new Despesa(descricao.trim(), valor, data, tipo);
+        Despesa despesa = new Despesa(valor, data, tipo);
         despesas.add(despesa);
         return true;
     }
@@ -190,5 +181,5 @@ public class ControleFinanceiro {
 
     private void setDespesa(List<Despesa> despesas) {
         this.despesas = despesas;
-}
+    }
 }
