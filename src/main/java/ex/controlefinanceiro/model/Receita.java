@@ -3,22 +3,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package ex.controlefinanceiro.model;
+
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
- * Classe que representa uma receita financeira.
- * Herda da classe Lancamento.
- * 
+ * Classe que representa uma receita financeira. Herda da classe Lancamento.
+ *
  * @author MKB e YPR
  */
 public class Receita extends Lancamento {
-    
+
     // Atributo privado para o tipo de receita
     private CategoriasReceitas tipo;
-    
+
     /**
      * Construtor da classe Receita.
-     * 
+     *
      * @param valor Valor da receita
      * @param data Data da receita
      * @param tipo Tipo da receita (ex: "Salário", "Freelance", "Vendas")
@@ -27,21 +28,26 @@ public class Receita extends Lancamento {
         super(valor, data);
         setTipo(tipo);
     }
-    
+
     // Getter para tipo
     public CategoriasReceitas getTipo() {
         return tipo;
     }
-    
+
     // Setter para tipo
     public void setTipo(CategoriasReceitas tipo) {
         this.tipo = tipo;
     }
-    
+
     /**
      * Método toString que inclui o tipo da receita.
      */
+    @Override
     public String toString() {
-        return "[RECEITA] " + super.toString() + " | Tipo: " + tipo;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        // Valor positivo com sinal +
+        return "Valor: +R$ " + String.format("%.2f", getValor())
+                + " | Data: " + getData().format(formatter)
+                + " | Categoria: " + getTipo();
     }
 }

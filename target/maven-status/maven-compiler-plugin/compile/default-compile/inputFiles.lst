@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-C:\Users\Premiersoft\Documents\NetBeansProjects\controleFinanceiro\src\main\java\ex\controlefinanceiro\model\CategoriasDespesas.java
-C:\Users\Premiersoft\Documents\NetBeansProjects\controleFinanceiro\src\main\java\ex\controlefinanceiro\model\CategoriasReceitas.java
-C:\Users\Premiersoft\Documents\NetBeansProjects\controleFinanceiro\src\main\java\ex\controlefinanceiro\model\ControleFinanceiro.java
-C:\Users\Premiersoft\Documents\NetBeansProjects\controleFinanceiro\src\main\java\ex\controlefinanceiro\model\Despesa.java
-C:\Users\Premiersoft\Documents\NetBeansProjects\controleFinanceiro\src\main\java\ex\controlefinanceiro\model\GerenciadorArquivos.java
-C:\Users\Premiersoft\Documents\NetBeansProjects\controleFinanceiro\src\main\java\ex\controlefinanceiro\model\Lancamento.java
-C:\Users\Premiersoft\Documents\NetBeansProjects\controleFinanceiro\src\main\java\ex\controlefinanceiro\model\Main.java
-C:\Users\Premiersoft\Documents\NetBeansProjects\controleFinanceiro\src\main\java\ex\controlefinanceiro\model\Receita.java
-C:\Users\Premiersoft\Documents\NetBeansProjects\controleFinanceiro\src\main\java\ex\controlefinanceiro\view\TelaExtrato.java
-C:\Users\Premiersoft\Documents\NetBeansProjects\controleFinanceiro\src\main\java\ex\controlefinanceiro\view\TelaInicio.java
-=======
 C:\Users\ADM\Desktop\BCC\Semestre 2\POO\controleFinanceiro\controleFinanceiro\src\main\java\ex\controlefinanceiro\model\CategoriasDespesas.java
 C:\Users\ADM\Desktop\BCC\Semestre 2\POO\controleFinanceiro\controleFinanceiro\src\main\java\ex\controlefinanceiro\model\CategoriasReceitas.java
 C:\Users\ADM\Desktop\BCC\Semestre 2\POO\controleFinanceiro\controleFinanceiro\src\main\java\ex\controlefinanceiro\model\ControleFinanceiro.java
@@ -19,4 +7,3 @@ C:\Users\ADM\Desktop\BCC\Semestre 2\POO\controleFinanceiro\controleFinanceiro\sr
 C:\Users\ADM\Desktop\BCC\Semestre 2\POO\controleFinanceiro\controleFinanceiro\src\main\java\ex\controlefinanceiro\model\Main.java
 C:\Users\ADM\Desktop\BCC\Semestre 2\POO\controleFinanceiro\controleFinanceiro\src\main\java\ex\controlefinanceiro\model\Receita.java
 C:\Users\ADM\Desktop\BCC\Semestre 2\POO\controleFinanceiro\controleFinanceiro\src\main\java\ex\controlefinanceiro\view\TelaInicio.java
->>>>>>> ee04fc55a6b1d0ef505b9eec27e5aa70da8bada1

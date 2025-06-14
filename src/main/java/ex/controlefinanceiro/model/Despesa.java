@@ -4,22 +4,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package ex.controlefinanceiro.model;
+
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
- * Classe que representa uma despesa financeira.
- * Herda da classe Lancamento.
- * 
+ * Classe que representa uma despesa financeira. Herda da classe Lancamento.
+ *
  * @author MKB e YPR
  */
 public class Despesa extends Lancamento {
-    
+
     // Atributo privado para o tipo de despesa
     private CategoriasDespesas tipo;
-    
+
     /**
      * Construtor da classe Despesa.
-     * 
+     *
      * @param valor Valor da despesa
      * @param data Data da despesa
      * @param tipo Tipo da despesa (ex: "Alimentação", "Transporte", "Lazer")
@@ -28,21 +29,26 @@ public class Despesa extends Lancamento {
         super(valor, data);
         setTipo(tipo);
     }
-    
+
     // Getter para tipo
     public CategoriasDespesas getTipo() {
         return tipo;
     }
-    
+
     // Setter para tipo
     public void setTipo(CategoriasDespesas tipo) {
         this.tipo = tipo;
     }
-    
+
     /**
      * Método toString que inclui o tipo da despesa.
      */
+    @Override
     public String toString() {
-        return "[DESPESA] " + super.toString() + " | Tipo: " + tipo;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        // Valor negativo com sinal -
+        return "Valor: -R$ " + String.format("%.2f", getValor())
+                + " | Data: " + getData().format(formatter)
+                + " | Categoria: " + getTipo();
     }
 }

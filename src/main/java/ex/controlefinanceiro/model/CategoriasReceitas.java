@@ -17,19 +17,20 @@ public enum CategoriasReceitas {
     VENDAS("Vendas"),
     INVESTIMENTOS("Investimentos"),
     OUTRAS_RECEITAS("Outras Receitas");
-    
+
     private final String descricao;
-    
+
     CategoriasReceitas(String descricao) {
         this.descricao = descricao;
     }
-    
+
     public String getDescricao() {
         return descricao;
     }
-    
+
     @Override
     public String toString() {
         return descricao;
     }
+
 }

@@ -7,6 +7,10 @@ package ex.controlefinanceiro.view;
 import ex.controlefinanceiro.model.CategoriasDespesas;
 import ex.controlefinanceiro.model.CategoriasReceitas;
 import ex.controlefinanceiro.model.ControleFinanceiro;
+import ex.controlefinanceiro.model.Despesa;
+import ex.controlefinanceiro.model.GerenciadorArquivos;
+import ex.controlefinanceiro.model.Receita;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
@@ -15,6 +19,8 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -22,26 +28,33 @@ import java.util.Date;
  */
 public class TelaInicio extends javax.swing.JFrame {
 
-    /**
-     * Creates new form TelaInicio
-     */
+    private ControleFinanceiro controle;
+    private GerenciadorArquivos gerenciador;
+
     public TelaInicio() {
         initComponents();
+        controle = new ControleFinanceiro();
+        gerenciador = new GerenciadorArquivos();
+
+        //carregarDadosIniciais();
+        // Configuração do spinner da data de lançamento
         SpinnerDateModel model = new SpinnerDateModel();
         jSpiData.setModel(model);
         JSpinner.DateEditor editor = new JSpinner.DateEditor(jSpiData, "dd/MM/yyyy");
         jSpiData.setEditor(editor);
-        
-        
+
+        // Configuração dos spinners para data de início e fim do extrato
         SpinnerDateModel model1 = new SpinnerDateModel();
         SpinnerDateModel model2 = new SpinnerDateModel();
-        
         jSpiDataInicio.setModel(model1);
         jSpiDataFim.setModel(model2);
+
         JSpinner.DateEditor editor1 = new JSpinner.DateEditor(jSpiDataInicio, "dd/MM/yyyy");
         JSpinner.DateEditor editor2 = new JSpinner.DateEditor(jSpiDataFim, "dd/MM/yyyy");
         jSpiDataInicio.setEditor(editor1);
         jSpiDataFim.setEditor(editor2);
+        
+        
 
     }
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -68,7 +81,6 @@ public class TelaInicio extends javax.swing.JFrame {
         jSpiDataInicio = new javax.swing.JSpinner();
         jSpiDataFim = new javax.swing.JSpinner();
         jBtnExtrato = new javax.swing.JButton();
-        jPanel4 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -256,19 +268,6 @@ public class TelaInicio extends javax.swing.JFrame {
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Movimentações"));
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -284,9 +283,7 @@ public class TelaInicio extends javax.swing.JFrame {
                             .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -295,15 +292,12 @@ public class TelaInicio extends javax.swing.JFrame {
                 .addGap(12, 12, 12)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(10, Short.MAX_VALUE))
         );
 
@@ -316,19 +310,17 @@ public class TelaInicio extends javax.swing.JFrame {
 
     private void jRBtnDespesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRBtnDespesaActionPerformed
         // TODO add your handling code here:
-        String tipo = "Despesa";
         jComboBox.removeAllItems();
         for (CategoriasDespesas cat : CategoriasDespesas.values()) {
-            jComboBox.addItem(cat.getDescricao());
+            jComboBox.addItem(cat);
         }
     }//GEN-LAST:event_jRBtnDespesaActionPerformed
 
     private void jRBtnReceitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRBtnReceitaActionPerformed
         // TODO add your handling code here:
-        String tipo = "Receita";
         jComboBox.removeAllItems();
         for (CategoriasReceitas cat : CategoriasReceitas.values()) {
-            jComboBox.addItem(cat.getDescricao());
+            jComboBox.addItem(cat); // adiciona o enum diretamente
         }
     }//GEN-LAST:event_jRBtnReceitaActionPerformed
 
@@ -338,34 +330,80 @@ public class TelaInicio extends javax.swing.JFrame {
 
     private void jBtnSaldoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSaldoActionPerformed
         // TODO add your handling code here:
-        ControleFinanceiro controle = new ControleFinanceiro();
+        try {
         DecimalFormat df = new DecimalFormat("R$ #,##0.00");
+
+        // Recarrega os dados do arquivo para atualizar listas internas
+        controle.carregarDados();
+
         double saldo = controle.consultarSaldo();
         jLSaldo.setText(df.format(saldo));
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Erro ao gerar extrato: " + e.getMessage());
+    }
+
     }//GEN-LAST:event_jBtnSaldoActionPerformed
 
     private void jBtnExtratoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExtratoActionPerformed
         // TODO add your handling code here:
-        
+        try {
+            // Pega as datas do Spinner
+            Date data1 = (Date) jSpiDataInicio.getValue();
+            Date data2 = (Date) jSpiDataFim.getValue();
+            LocalDate dataInicio = data1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate dataFim = data2.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+            List<String> extrato = controle.gerarExtrato(dataInicio, dataFim);
+
+            // Exibe no JTextArea ou JOptionPane
+            StringBuilder sb = new StringBuilder();
+            for (String linha : extrato) {
+                sb.append(linha).append("\n");
+            }
+
+            // Aqui você decide: exibir num JTextArea (ideal) ou JOptionPane simples
+            JOptionPane.showMessageDialog(this, sb.toString(), "Extrato", JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro ao gerar extrato: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jBtnExtratoActionPerformed
 
     private void jBtnLancarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnLancarActionPerformed
         // TODO add your handling code here:
-        ControleFinanceiro controle = new ControleFinanceiro();
-        Date data = (Date) jSpiData.getValue();
+        try {
+            Date data = (Date) jSpiData.getValue();
+            Instant instant = data.toInstant();
+            LocalDate dataSelecionada = instant.atZone(ZoneId.systemDefault()).toLocalDate();
 
-        Instant instant = data.toInstant();  // transforma Date em Instant
-        LocalDate dataSelecionada = instant.atZone(ZoneId.systemDefault()).toLocalDate();
-        String textoValor = jTFValor.getText();
-        double valor = Double.parseDouble(textoValor);
+            String textoValor = jTFValor.getText().trim();
+            if (textoValor.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Informe um valor.", "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
-        // Captura qual categoria foi escolhida no combo
-        String categoriaSelecionada = (String) jComboBox.getSelectedItem();
+            double valor = Double.parseDouble(textoValor);
 
-        if (jRBtnReceita.isSelected()) {
-            //controle.incluirReceita(descricao, valor, dataSelecionada, categoriaSelecionada);
-        } else if (jRBtnDespesa.isSelected()) {
-            //controle.incluirDespesa(descricao, valor, dataSelecionada, categoriaSelecionada);
+            GerenciadorArquivos gerenciador = new GerenciadorArquivos();
+
+            if (jRBtnReceita.isSelected()) {
+                CategoriasReceitas categoria = (CategoriasReceitas) jComboBox.getSelectedItem();
+                Receita receita = new Receita(valor, dataSelecionada, categoria);
+                gerenciador.adicionarReceita(receita);
+                JOptionPane.showMessageDialog(this, "Receita registrada com sucesso!");
+            } else if (jRBtnDespesa.isSelected()) {
+                CategoriasDespesas categoria = (CategoriasDespesas) jComboBox.getSelectedItem();
+                Despesa despesa = new Despesa(valor, dataSelecionada, categoria);
+                gerenciador.adicionarDespesa(despesa);
+                JOptionPane.showMessageDialog(this, "Despesa registrada com sucesso!");
+            } else {
+                JOptionPane.showMessageDialog(this, "Selecione Receita ou Despesa!", "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Valor inválido. Digite um número válido.", "Erro", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro ao lançar valor: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jBtnLancarActionPerformed
 
@@ -409,7 +447,7 @@ public class TelaInicio extends javax.swing.JFrame {
     private javax.swing.JButton jBtnExtrato;
     private javax.swing.JButton jBtnLancar;
     private javax.swing.JButton jBtnSaldo;
-    private javax.swing.JComboBox<String> jComboBox;
+    private javax.swing.JComboBox<Object> jComboBox;
     private javax.swing.JLabel jLSaldo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -420,7 +458,6 @@ public class TelaInicio extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JRadioButton jRBtnDespesa;
     private javax.swing.JRadioButton jRBtnReceita;
     private javax.swing.JSpinner jSpiData;

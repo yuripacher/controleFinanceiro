@@ -4,156 +4,94 @@
  */
 package ex.controlefinanceiro.model;
 
+import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
  * Classe controladora principal que gerencia todas as operações financeiras.
- * Implementa funcionalidades básicas para receitas e despesas.
- * 
+ * Implementa funcionalidades básicas para receitas e despesas. Responsável por
+ * todos os cálculos e lógica de negócio.
+ *
  * @author IMKB e YPR
  */
 public class ControleFinanceiro {
-    
-    // Atributos privados
+
     private List<Receita> receitas;
     private List<Despesa> despesas;
-    
-    /**
-     * Construtor da classe ControladorFinanceiro.
-     * Inicializa as listas vazias.
-     */
+    private GerenciadorArquivos gerenciador;
+    private static final DateTimeFormatter FORMATO_DATA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
     public ControleFinanceiro() {
-        setReceita(new ArrayList<>());
-        setDespesa(new ArrayList<>());
+        this.receitas = new ArrayList<>();
+        this.despesas = new ArrayList<>();
+        this.gerenciador = new GerenciadorArquivos();
+        carregarDados();
     }
-    
-    /**
-     * Adiciona uma nova receita ao sistema.
-     * 
-     * @param valor Valor da receita
-     * @param data Data da receita
-     * @param tipo Tipo da receita
-     * @return true se a receita foi adicionada com sucesso
-     */
+
+    public ControleFinanceiro(GerenciadorArquivos gerenciador) {
+        this.receitas = new ArrayList<>();
+        this.despesas = new ArrayList<>();
+        this.gerenciador = gerenciador;
+        carregarDados();
+    }
+
+    public void carregarDados() {
+        try {
+            this.receitas = gerenciador.carregarReceitas();
+            this.despesas = gerenciador.carregarDespesas();
+        } catch (IOException e) {
+            System.err.println("Erro ao carregar dados: " + e.getMessage());
+            this.receitas = new ArrayList<>();
+            this.despesas = new ArrayList<>();
+        }
+    }
+
     public boolean incluirReceita(double valor, LocalDate data, CategoriasReceitas tipo) {
-        if (valor <= 0) {
+        if (!validarLancamento(valor, data)) {
             return false;
         }
-        if (data == null) {
-            return false;
-        }
-        
+
         Receita receita = new Receita(valor, data, tipo);
-        receitas.add(receita);
-        return true;
+
+        try {
+            gerenciador.adicionarReceita(receita);
+            receitas.add(receita);
+            return true;
+        } catch (IOException e) {
+            System.err.println("Erro ao salvar receita: " + e.getMessage());
+            return false;
+        }
     }
-    
-    /**
-     * Adiciona uma nova despesa ao sistema.
-     * 
-     * @param valor Valor da despesa
-     * @param data Data da despesa
-     * @param tipo Tipo da despesa
-     * @return true se a despesa foi adicionada com sucesso
-     */
+
     public boolean incluirDespesa(double valor, LocalDate data, CategoriasDespesas tipo) {
-        if (valor <= 0) {
+        if (!validarLancamento(valor, data)) {
             return false;
         }
-        if (data == null) {
-            return false;
-        }
-        
+
         Despesa despesa = new Despesa(valor, data, tipo);
-        despesas.add(despesa);
-        return true;
-    }
-    
-    /**
-     * Calcula o saldo atual (receitas - despesas).
-     * 
-     * @return Saldo atual
-     */
-    public double consultarSaldo() {
-        double totalReceitas = 0.0;
-        double totalDespesas = 0.0;
-        
-        // Soma todas as receitas
-        for (Receita receita : receitas) {
-            totalReceitas += receita.getValor();
+
+        try {
+            gerenciador.adicionarDespesa(despesa);
+            despesas.add(despesa);
+            return true;
+        } catch (IOException e) {
+            System.err.println("Erro ao salvar despesa: " + e.getMessage());
+            return false;
         }
-        
-        // Soma todas as despesas
-        for (Despesa despesa : despesas) {
-            totalDespesas += despesa.getValor();
-        }
-        
-        return totalReceitas - totalDespesas;
     }
-    
-    /**
-     * Lista todas as receitas cadastradas.
-     * 
-     * @return Lista de receitas
-     */
-    public List<Receita> listarReceitas() {
-        return new ArrayList<>(receitas);
+
+    private boolean validarLancamento(double valor, LocalDate data) {
+        return valor > 0 && data != null;
     }
-    
-    /**
-     * Lista todas as despesas cadastradas.
-     * 
-     * @return Lista de despesas
-     */
-    public List<Despesa> listarDespesas() {
-        return new ArrayList<>(despesas);
+
+    private boolean validarPeriodo(LocalDate inicio, LocalDate fim) {
+        return inicio != null && fim != null && !inicio.isAfter(fim);
     }
-    
-    /**
-     * Remove uma receita do sistema.
-     * 
-     * @param receita Receita a ser removida
-     * @return true se removida com sucesso
-     */
-    public boolean removerReceita(Receita receita) {
-        return receitas.remove(receita);
-    }
-    
-    /**
-     * Remove uma despesa do sistema.
-     * 
-     * @param despesa Despesa a ser removida
-     * @return true se removida com sucesso
-     */
-    public boolean removerDespesa(Despesa despesa) {
-        return despesas.remove(despesa);
-    }
-    
-    /**
-     * Retorna o total de receitas cadastradas.
-     * 
-     * @return Número de receitas
-     */
-    public int getTotalReceitas() {
-        return receitas.size();
-    }
-    
-    /**
-     * Retorna o total de despesas cadastradas.
-     * 
-     * @return Número de despesas
-     */
-    public int getTotalDespesas() {
-        return despesas.size();
-    }
-    
-    /**
-     * Calcula o valor total das receitas.
-     * 
-     * @return Soma de todas as receitas
-     */
+
     public double getValorTotalReceitas() {
         double total = 0.0;
         for (Receita receita : receitas) {
@@ -161,12 +99,7 @@ public class ControleFinanceiro {
         }
         return total;
     }
-    
-    /**
-     * Calcula o valor total das despesas.
-     * 
-     * @return Soma de todas as despesas
-     */
+
     public double getValorTotalDespesas() {
         double total = 0.0;
         for (Despesa despesa : despesas) {
@@ -175,11 +108,65 @@ public class ControleFinanceiro {
         return total;
     }
 
-    private void setReceita(List<Receita> receitas) {
-        this.receitas = receitas;
+    public double consultarSaldo() {
+        return getValorTotalReceitas() - getValorTotalDespesas();
     }
 
-    private void setDespesa(List<Despesa> despesas) {
-        this.despesas = despesas;
+    public List<Receita> getReceitas() {
+        return new ArrayList<>(receitas);
+    }
+
+    public List<Despesa> getDespesas() {
+        return new ArrayList<>(despesas);
+    }
+
+    public List<Lancamento> listarTodosLancamentos() {
+        List<Lancamento> todos = new ArrayList<>();
+        todos.addAll(receitas);
+        todos.addAll(despesas);
+        // Ordenar por data
+        todos.sort(Comparator.comparing(Lancamento::getData));
+        return todos;
+    }
+
+    public List<String> gerarExtrato(LocalDate dataInicio, LocalDate dataFim) {
+        if (!validarPeriodo(dataInicio, dataFim)) {
+            return new ArrayList<>();
+        }
+
+        List<String> extrato = new ArrayList<>();
+
+        // Criar lista de todos os lançamentos no período
+        List<Lancamento> lancamentosNoPeriodo = new ArrayList<>();
+
+        for (Receita receita : receitas) {
+            if (!receita.getData().isBefore(dataInicio) && !receita.getData().isAfter(dataFim)) {
+                lancamentosNoPeriodo.add(receita);
+            }
+        }
+
+        for (Despesa despesa : despesas) {
+            if (!despesa.getData().isBefore(dataInicio) && !despesa.getData().isAfter(dataFim)) {
+                lancamentosNoPeriodo.add(despesa);
+            }
+        }
+
+        // Ordenar por data
+        lancamentosNoPeriodo.sort(Comparator.comparing(Lancamento::getData));
+
+        // Converter para strings formatadas
+        for (Lancamento lancamento : lancamentosNoPeriodo) {
+            if (lancamento instanceof Receita) {
+                Receita receita = (Receita) lancamento;
+                extrato.add("RECEITA - " + receita.getData().format(FORMATO_DATA)
+                        + " - " + receita.getTipo() + " - R$ " + String.format("%.2f", receita.getValor()));
+            } else if (lancamento instanceof Despesa) {
+                Despesa despesa = (Despesa) lancamento;
+                extrato.add("DESPESA - " + despesa.getData().format(FORMATO_DATA)
+                        + " - " + despesa.getTipo() + " - R$ " + String.format("%.2f", despesa.getValor()));
+            }
+        }
+
+        return extrato;
     }
 }

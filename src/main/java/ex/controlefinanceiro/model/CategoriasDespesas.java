@@ -20,15 +20,15 @@ public enum CategoriasDespesas {
     OUTRAS_DESPESAS("Outras Despesas");
     
     private final String descricao;
-    
+
     CategoriasDespesas(String descricao) {
         this.descricao = descricao;
     }
-    
+
     public String getDescricao() {
         return descricao;
     }
-    
+
     @Override
     public String toString() {
         return descricao;

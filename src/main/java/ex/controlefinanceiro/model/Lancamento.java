@@ -18,12 +18,6 @@ public class Lancamento {
     private double valor;
     private LocalDate data;
     
-    /**
-     * Construtor da classe Lancamento.
-     * 
-     * @param valor Valor do lançamento
-     * @param data Data do lançamento
-     */
     public Lancamento(double valor, LocalDate data) {
         setValor(valor);
         setData(data);
@@ -49,9 +43,6 @@ public class Lancamento {
         this.data = data;
     }
     
-    /**
-     * Método toString para exibir os dados do lançamento de forma legível.
-     */
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return "Valor: R$ " + valor + 
