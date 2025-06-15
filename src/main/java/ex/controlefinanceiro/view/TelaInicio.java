@@ -53,8 +53,6 @@ public class TelaInicio extends javax.swing.JFrame {
         JSpinner.DateEditor editor2 = new JSpinner.DateEditor(jSpiDataFim, "dd/MM/yyyy");
         jSpiDataInicio.setEditor(editor1);
         jSpiDataFim.setEditor(editor2);
-        
-        
 
     }
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -72,15 +70,20 @@ public class TelaInicio extends javax.swing.JFrame {
         jSpiData = new javax.swing.JSpinner();
         jComboBox = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
+        jBtnLancar = new javax.swing.JButton();
         jTFValor = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jBtnLancar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jSpiDataInicio = new javax.swing.JSpinner();
         jSpiDataFim = new javax.swing.JSpinner();
         jBtnExtrato = new javax.swing.JButton();
+        jBtnListarReceitas = new javax.swing.JButton();
+        jBtnListarDespesas = new javax.swing.JButton();
+        jBtnSaldoPeriodo = new javax.swing.JButton();
+        jLSaldoPeriodo = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -88,7 +91,7 @@ public class TelaInicio extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Controle Financeiro");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Consultar saldo"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Consultar saldo atual"));
 
         jBtnSaldo.setText("Ver Saldo");
         jBtnSaldo.addActionListener(new java.awt.event.ActionListener() {
@@ -105,23 +108,20 @@ public class TelaInicio extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(62, 62, 62)
-                        .addComponent(jLSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(78, 78, 78)
-                        .addComponent(jBtnSaldo)))
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addGap(72, 72, 72)
+                .addComponent(jLSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jBtnSaldo)
+                .addGap(39, 39, 39))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addComponent(jLSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jBtnSaldo)
-                .addContainerGap(15, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnSaldo))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Lançamento"));
@@ -153,6 +153,13 @@ public class TelaInicio extends javax.swing.JFrame {
 
         jLabel2.setText("Categoria");
 
+        jBtnLancar.setText("Lançar");
+        jBtnLancar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnLancarActionPerformed(evt);
+            }
+        });
+
         jTFValor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTFValorActionPerformed(evt);
@@ -161,20 +168,17 @@ public class TelaInicio extends javax.swing.JFrame {
 
         jLabel3.setText("Valor (R$)");
 
-        jBtnLancar.setText("Lançar");
-        jBtnLancar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBtnLancarActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(26, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(11, 11, 11)
+                        .addComponent(jTFValor, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -184,55 +188,73 @@ public class TelaInicio extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3))
-                        .addGap(11, 11, 11)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTFValor, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
-                            .addComponent(jSpiData))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
-                        .addComponent(jBtnLancar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                                .addComponent(jComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(38, 38, 38)
+                                .addComponent(jSpiData, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jBtnLancar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRBtnReceita)
-                    .addComponent(jRBtnDespesa))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jSpiData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(13, 13, 13)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTFValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTFValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jRBtnReceita)
+                            .addComponent(jRBtnDespesa))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(jComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(jSpiData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jBtnLancar))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
         jComboBox.getAccessibleContext().setAccessibleName("");
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Extrato"));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Informações por período"));
 
         jLabel6.setText("Inicio");
 
         jLabel7.setText("Fim");
 
-        jBtnExtrato.setText("Gerar Extrato");
+        jBtnExtrato.setText("Ver Extrato");
         jBtnExtrato.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnExtratoActionPerformed(evt);
+            }
+        });
+
+        jBtnListarReceitas.setText("Ver Receitas");
+        jBtnListarReceitas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnListarReceitasActionPerformed(evt);
+            }
+        });
+
+        jBtnListarDespesas.setText("Ver Despesas");
+        jBtnListarDespesas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnListarDespesasActionPerformed(evt);
+            }
+        });
+
+        jBtnSaldoPeriodo.setText("Ver Saldo");
+        jBtnSaldoPeriodo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnSaldoPeriodoActionPerformed(evt);
             }
         });
 
@@ -241,17 +263,33 @@ public class TelaInicio extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jSpiDataFim, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
-                    .addComponent(jSpiDataInicio))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jBtnExtrato)
-                .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel7))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jSpiDataFim)
+                                    .addComponent(jSpiDataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(37, 37, 37))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addComponent(jBtnListarReceitas, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jBtnExtrato, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jBtnListarDespesas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(27, 27, 27)
+                                .addComponent(jLSaldoPeriodo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(34, 34, 34)
+                                .addComponent(jBtnSaldoPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap())))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -263,10 +301,23 @@ public class TelaInicio extends javax.swing.JFrame {
                 .addGap(9, 9, 9)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jSpiDataFim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtnExtrato))
-                .addContainerGap(19, Short.MAX_VALUE))
+                    .addComponent(jSpiDataFim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jBtnExtrato)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jBtnListarReceitas)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jBtnListarDespesas)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLSaldoPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnSaldoPeriodo))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 2, 8)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel5.setText("Version 0.8");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -275,16 +326,22 @@ public class TelaInicio extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(212, 212, 212)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(16, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(212, 212, 212)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -295,10 +352,11 @@ public class TelaInicio extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(10, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel5))
         );
 
         pack();
@@ -331,24 +389,27 @@ public class TelaInicio extends javax.swing.JFrame {
     private void jBtnSaldoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSaldoActionPerformed
         // TODO add your handling code here:
         try {
-        DecimalFormat df = new DecimalFormat("R$ #,##0.00");
+            DecimalFormat df = new DecimalFormat("R$ #,##0.00");
 
-        // Recarrega os dados do arquivo para atualizar listas internas
-        controle.carregarDados();
+            // Recarrega os dados do arquivo para atualizar listas internas
+            controle.carregarDados();
 
-        double saldo = controle.consultarSaldo();
-        jLSaldo.setText(df.format(saldo));
+            double saldo = controle.consultarSaldo();
+            
+            jLSaldo.setText(df.format(saldo));
 
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Erro ao gerar extrato: " + e.getMessage());
-    }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro ao gerar extrato: " + e.getMessage());
+        }
 
     }//GEN-LAST:event_jBtnSaldoActionPerformed
 
     private void jBtnExtratoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExtratoActionPerformed
         // TODO add your handling code here:
+        Extrato telaExtrato = new Extrato(this, true);
+
         try {
-            // Pega as datas do Spinner
+
             Date data1 = (Date) jSpiDataInicio.getValue();
             Date data2 = (Date) jSpiDataFim.getValue();
             LocalDate dataInicio = data1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -356,14 +417,12 @@ public class TelaInicio extends javax.swing.JFrame {
 
             List<String> extrato = controle.gerarExtrato(dataInicio, dataFim);
 
-            // Exibe no JTextArea ou JOptionPane
             StringBuilder sb = new StringBuilder();
             for (String linha : extrato) {
                 sb.append(linha).append("\n");
             }
-
-            // Aqui você decide: exibir num JTextArea (ideal) ou JOptionPane simples
-            JOptionPane.showMessageDialog(this, sb.toString(), "Extrato", JOptionPane.INFORMATION_MESSAGE);
+            telaExtrato.adicionarTexto(sb.toString());
+            telaExtrato.setVisible(true);
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro ao gerar extrato: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
@@ -373,6 +432,7 @@ public class TelaInicio extends javax.swing.JFrame {
     private void jBtnLancarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnLancarActionPerformed
         // TODO add your handling code here:
         try {
+
             Date data = (Date) jSpiData.getValue();
             Instant instant = data.toInstant();
             LocalDate dataSelecionada = instant.atZone(ZoneId.systemDefault()).toLocalDate();
@@ -384,8 +444,10 @@ public class TelaInicio extends javax.swing.JFrame {
             }
 
             double valor = Double.parseDouble(textoValor);
-
-            GerenciadorArquivos gerenciador = new GerenciadorArquivos();
+            if (valor <= 0) {
+                JOptionPane.showMessageDialog(this, "Informe um valor maior que zero", "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
             if (jRBtnReceita.isSelected()) {
                 CategoriasReceitas categoria = (CategoriasReceitas) jComboBox.getSelectedItem();
@@ -400,12 +462,85 @@ public class TelaInicio extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(this, "Selecione Receita ou Despesa!", "Aviso", JOptionPane.WARNING_MESSAGE);
             }
+
+            limparCampos();
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Valor inválido. Digite um número válido.", "Erro", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro ao lançar valor: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jBtnLancarActionPerformed
+
+    private void jBtnListarReceitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnListarReceitasActionPerformed
+        // TODO add your handling code here:
+        ListaReceitas telaReceitas = new ListaReceitas(this, true);
+
+        try {
+
+            Date data1 = (Date) jSpiDataInicio.getValue();
+            Date data2 = (Date) jSpiDataFim.getValue();
+            LocalDate dataInicio = data1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate dataFim = data2.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+            List<Receita> receitas = controle.listarReceitasPorPeriodo(dataInicio, dataFim);
+
+            StringBuilder sb = new StringBuilder();
+            for (Receita receita : receitas) {
+                sb.append(receita).append("\n");
+            }
+            telaReceitas.adicionarTexto(sb.toString());
+            telaReceitas.setVisible(true);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro ao gerar extrato: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jBtnListarReceitasActionPerformed
+
+    private void jBtnListarDespesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnListarDespesasActionPerformed
+        // TODO add your handling code here:
+        ListaDespesas telaDespesas = new ListaDespesas(this, true);
+
+        try {
+
+            Date data1 = (Date) jSpiDataInicio.getValue();
+            Date data2 = (Date) jSpiDataFim.getValue();
+            LocalDate dataInicio = data1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate dataFim = data2.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+            List<Despesa> despesas = controle.listarDespesasPorPeriodo(dataInicio, dataFim);
+
+            StringBuilder sb = new StringBuilder();
+            for (Despesa despesa : despesas) {
+                sb.append(despesa).append("\n");
+            }
+            telaDespesas.adicionarTexto(sb.toString());
+            telaDespesas.setVisible(true);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro ao gerar extrato: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jBtnListarDespesasActionPerformed
+
+    private void jBtnSaldoPeriodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSaldoPeriodoActionPerformed
+        // TODO add your handling code here:
+        try {
+        DecimalFormat df = new DecimalFormat("R$ #,##0.00");
+
+        // Recarrega os dados do arquivo para garantir que as listas estejam atualizadas
+        controle.carregarDados();
+
+        Date data1 = (Date) jSpiDataInicio.getValue();
+        Date data2 = (Date) jSpiDataFim.getValue();
+        LocalDate dataInicio = data1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate dataFim = data2.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        double saldo = controle.calcularSaldoPorPeriodo(dataInicio, dataFim);
+
+        jLSaldoPeriodo.setText(df.format(saldo));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro ao calcular saldo: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jBtnSaldoPeriodoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -442,17 +577,29 @@ public class TelaInicio extends javax.swing.JFrame {
         });
     }
 
+    private void limparCampos() {
+        jTFValor.setText("");
+        jComboBox.removeAllItems();
+        buttonGroup1.clearSelection();
+        jSpiData.setValue(new Date()); // Volta para a data atual
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jBtnExtrato;
     private javax.swing.JButton jBtnLancar;
+    private javax.swing.JButton jBtnListarDespesas;
+    private javax.swing.JButton jBtnListarReceitas;
     private javax.swing.JButton jBtnSaldo;
+    private javax.swing.JButton jBtnSaldoPeriodo;
     private javax.swing.JComboBox<Object> jComboBox;
     private javax.swing.JLabel jLSaldo;
+    private javax.swing.JLabel jLSaldoPeriodo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;

@@ -13,8 +13,7 @@ import java.time.format.DateTimeFormatter;
  * @author MKB e YPR
  */
 public class Lancamento {
-    
-    // Atributos privados
+
     private double valor;
     private LocalDate data;
     

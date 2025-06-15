@@ -42,11 +42,11 @@ public class Despesa extends Lancamento {
 
     /**
      * Método toString que inclui o tipo da despesa.
+     * Valor negativo com sinal -
      */
     @Override
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        // Valor negativo com sinal -
         return "Valor: -R$ " + String.format("%.2f", getValor())
                 + " | Data: " + getData().format(formatter)
                 + " | Categoria: " + getTipo();

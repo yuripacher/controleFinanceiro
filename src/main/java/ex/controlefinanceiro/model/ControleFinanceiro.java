@@ -60,6 +60,7 @@ public class ControleFinanceiro {
         try {
             gerenciador.adicionarReceita(receita);
             receitas.add(receita);
+            carregarDados();
             return true;
         } catch (IOException e) {
             System.err.println("Erro ao salvar receita: " + e.getMessage());
@@ -77,7 +78,9 @@ public class ControleFinanceiro {
         try {
             gerenciador.adicionarDespesa(despesa);
             despesas.add(despesa);
+            carregarDados();
             return true;
+
         } catch (IOException e) {
             System.err.println("Erro ao salvar despesa: " + e.getMessage());
             return false;
@@ -130,13 +133,13 @@ public class ControleFinanceiro {
     }
 
     public List<String> gerarExtrato(LocalDate dataInicio, LocalDate dataFim) {
+        carregarDados();
         if (!validarPeriodo(dataInicio, dataFim)) {
             return new ArrayList<>();
         }
 
         List<String> extrato = new ArrayList<>();
 
-        // Criar lista de todos os lançamentos no período
         List<Lancamento> lancamentosNoPeriodo = new ArrayList<>();
 
         for (Receita receita : receitas) {
@@ -169,4 +172,50 @@ public class ControleFinanceiro {
 
         return extrato;
     }
+
+    public List<Receita> listarReceitasPorPeriodo(LocalDate inicio, LocalDate fim) {
+        List<Receita> resultado = new ArrayList<>();
+        if (!validarPeriodo(inicio, fim)) {
+            return resultado;
+        }
+
+        for (Receita r : receitas) {
+            if (!r.getData().isBefore(inicio) && !r.getData().isAfter(fim)) {
+                resultado.add(r);
+            }
+        }
+        resultado.sort(Comparator.comparing(Receita::getData));
+        return resultado;
+    }
+
+    public List<Despesa> listarDespesasPorPeriodo(LocalDate inicio, LocalDate fim) {
+        List<Despesa> resultado = new ArrayList<>();
+        if (!validarPeriodo(inicio, fim)) {
+            return resultado;
+        }
+
+        for (Despesa d : despesas) {
+            if (!d.getData().isBefore(inicio) && !d.getData().isAfter(fim)) {
+                resultado.add(d);
+            }
+        }
+        resultado.sort(Comparator.comparing(Despesa::getData));
+        return resultado;
+    }
+
+    public double calcularSaldoPorPeriodo(LocalDate inicio, LocalDate fim) {
+        double totalReceitas = 0;
+        double totalDespesas = 0;
+
+        for (Receita r : listarReceitasPorPeriodo(inicio, fim)) {
+            totalReceitas += r.getValor();
+        }
+
+        for (Despesa d : listarDespesasPorPeriodo(inicio, fim)) {
+            totalDespesas += d.getValor();
+        }
+
+        return totalReceitas - totalDespesas;
+    }
+
 }
