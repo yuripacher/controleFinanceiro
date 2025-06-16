@@ -6,7 +6,7 @@ package ex.controlefinanceiro.view;
 
 /**
  *
- * @author ADM
+ * @author MKB e YPR
  */
 public class Extrato extends javax.swing.JDialog {
 

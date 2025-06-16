@@ -13,35 +13,60 @@ import java.time.format.DateTimeFormatter;
  * @author MKB e YPR
  */
 public class Lancamento {
-
+/**
+ * Atributos privado para o valor do lançamento e a data
+ */
     private double valor;
     private LocalDate data;
     
+    /**
+     * Construtor da classe Lançamento
+     * 
+     * @param valor Valor do lançamento
+     * @param data Data do lançamento
+     */
     public Lancamento(double valor, LocalDate data) {
         setValor(valor);
         setData(data);
     }
     
-    // Getter para valor
+    /** Getter para valor
+     * 
+     * @return valor
+     */
     public double getValor() {
         return valor;
     }
     
-    // Setter para valor
+    /** Setter para valor
+     * 
+     * @param valor 
+     */
     public void setValor(double valor) {
         this.valor = valor;
     }
     
-    // Getter para data
+    /** Getter para data
+     * 
+     * @return data
+     */
     public LocalDate getData() {
         return data;
     }
     
-    // Setter para data
+    /** Setter para data
+     * 
+     * @param data 
+     */
     public void setData(LocalDate data) {
         this.data = data;
     }
     
+    /**
+     * Método toString que retorna a forma que o lançamento será apresentada
+     * 
+     * @return String formatada com valor e data do lançamento.
+     */
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return "Valor: R$ " + valor + 

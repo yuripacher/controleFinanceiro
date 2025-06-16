@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Premiersoft
+ * @author MKB e YPR
  */
 public class TelaInicio extends javax.swing.JFrame {
 
@@ -390,8 +390,6 @@ public class TelaInicio extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             DecimalFormat df = new DecimalFormat("R$ #,##0.00");
-
-            // Recarrega os dados do arquivo para atualizar listas internas
             controle.carregarDados();
 
             double saldo = controle.consultarSaldo();
@@ -407,6 +405,7 @@ public class TelaInicio extends javax.swing.JFrame {
     private void jBtnExtratoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExtratoActionPerformed
         // TODO add your handling code here:
         Extrato telaExtrato = new Extrato(this, true);
+        controle.carregarDados();
 
         try {
 
@@ -474,6 +473,7 @@ public class TelaInicio extends javax.swing.JFrame {
     private void jBtnListarReceitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnListarReceitasActionPerformed
         // TODO add your handling code here:
         ListaReceitas telaReceitas = new ListaReceitas(this, true);
+        controle.carregarDados();
 
         try {
 
@@ -499,6 +499,7 @@ public class TelaInicio extends javax.swing.JFrame {
     private void jBtnListarDespesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnListarDespesasActionPerformed
         // TODO add your handling code here:
         ListaDespesas telaDespesas = new ListaDespesas(this, true);
+        controle.carregarDados();
 
         try {
 
@@ -525,8 +526,6 @@ public class TelaInicio extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
         DecimalFormat df = new DecimalFormat("R$ #,##0.00");
-
-        // Recarrega os dados do arquivo para garantir que as listas estejam atualizadas
         controle.carregarDados();
 
         Date data1 = (Date) jSpiDataInicio.getValue();

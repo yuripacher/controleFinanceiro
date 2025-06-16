@@ -12,12 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Classe responsável APENAS pela persistência dos dados em arquivos.
- * Gerencia a leitura e escrita de receitas e despesas usando streams.
- * NÃO faz cálculos - apenas persistência.
+ * Classe responsável APENAS pela persistência dos dados em arquivos. Gerencia a
+ * leitura e escrita de receitas e despesas usando streams. NÃO faz cálculos -
+ * apenas persistência.
  *
- * @author Iniciante
- * @version 3.0
+ * @author MKB e YPR
  */
 public class GerenciadorArquivos {
 
@@ -25,15 +24,26 @@ public class GerenciadorArquivos {
     private static final String ARQUIVO_DADOS = "financeiro.txt";
     private static final DateTimeFormatter FORMATO_DATA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
+    /**
+     * Construtor padrão. Inicializa o sistema de arquivos garantindo que a
+     * pasta e arquivo de dados existam.
+     */
     public GerenciadorArquivos() {
         inicializarSistemaArquivos();
     }
 
+    /**
+     * Inicializa a estrutura de pastas e arquivo para armazenamento dos dados.
+     * Cria a pasta e arquivo caso não existam.
+     */
     private void inicializarSistemaArquivos() {
         criarPastaDados();
         criarArquivoDados();
     }
 
+    /**
+     * Cria a pasta "dados" caso ela não exista.
+     */
     private void criarPastaDados() {
         File pasta = new File(PASTA_DADOS);
         if (!pasta.exists()) {
@@ -45,6 +55,10 @@ public class GerenciadorArquivos {
         }
     }
 
+    /**
+     * Cria o arquivo "financeiro.txt" dentro da pasta "dados" caso ele não
+     * exista.
+     */
     private void criarArquivoDados() {
         File arquivo = new File(PASTA_DADOS, ARQUIVO_DADOS);
         try {
@@ -60,16 +74,33 @@ public class GerenciadorArquivos {
         }
     }
 
-    // --- Métodos para adicionar receita e despesa ---
+    /**
+     * Adiciona uma nova receita no arquivo de dados.
+     *
+     * O método formata os dados da receita em uma linha de texto e grava no
+     * arquivo, acrescentando ao final (append).
+     *
+     * @param receita Objeto Receita contendo valor, data e categoria.
+     */
     public void adicionarReceita(Receita receita) throws IOException {
         salvarLinha("RECEITA;" + receita.getValor() + ";" + receita.getData().format(FORMATO_DATA) + ";" + receita.getTipo().name());
     }
 
+    /**
+     * Adiciona uma nova despesa ao arquivo de dados. Grava a despesa em uma
+     * linha no arquivo no formato: DESPESA;valor;data;categoria
+     *
+     * @param despesa Objeto Despesa com valor, data e categoria.
+     */
     public void adicionarDespesa(Despesa despesa) throws IOException {
         salvarLinha("DESPESA;" + despesa.getValor() + ";" + despesa.getData().format(FORMATO_DATA) + ";" + despesa.getTipo().name());
     }
 
-    // --- Salva linha no arquivo usando FileOutputStream ---
+    /**
+     * Salva uma linha de texto no arquivo de dados, acrescentando ao final.
+     *
+     * @param linha String contendo os dados formatados a serem salvos.
+     */
     private void salvarLinha(String linha) throws IOException {
         File arquivo = new File(PASTA_DADOS, ARQUIVO_DADOS);
         try (FileOutputStream fos = new FileOutputStream(arquivo, true)) {  // 'true' para append
@@ -79,7 +110,12 @@ public class GerenciadorArquivos {
         }
     }
 
-    // --- Carregar receitas ---
+    /**
+     * Carrega todas as receitas armazenadas no arquivo de dados. Lê o arquivo
+     * inteiro e filtra as linhas que representam receitas.
+     *
+     * @return Lista de objetos Receita carregados do arquivo.
+     */
     public List<Receita> carregarReceitas() throws IOException {
         List<Receita> listaReceitas = new ArrayList<>();
         File arquivo = new File(PASTA_DADOS, ARQUIVO_DADOS);
@@ -87,10 +123,8 @@ public class GerenciadorArquivos {
             return listaReceitas;
         }
 
-        // ler tudo do arquivo usando FileInputStream
         String textoArquivo = lerArquivoComoString(arquivo);
 
-        // dividir linhas e parsear só linhas RECEITA
         String[] linhas = textoArquivo.split("\n");
         for (String linha : linhas) {
             if (linha.startsWith("RECEITA;")) {
@@ -103,7 +137,12 @@ public class GerenciadorArquivos {
         return listaReceitas;
     }
 
-    // --- Carregar despesas ---
+    /**
+     * Carrega todas as despesas armazenadas no arquivo de dados. Lê o arquivo
+     * inteiro e filtra as linhas que representam despesas.
+     *
+     * @return Lista de objetos Despesa carregados do arquivo.
+     */
     public List<Despesa> carregarDespesas() throws IOException {
         List<Despesa> listaDespesas = new ArrayList<>();
         File arquivo = new File(PASTA_DADOS, ARQUIVO_DADOS);
@@ -125,7 +164,12 @@ public class GerenciadorArquivos {
         return listaDespesas;
     }
 
-    // --- Ler arquivo como String com FileInputStream ---
+    /**
+     * Lê o conteúdo inteiro de um arquivo e retorna como uma String.
+     *
+     * @param arquivo Arquivo a ser lido.
+     * @return Conteúdo do arquivo como String.
+     */
     private String lerArquivoComoString(File arquivo) throws IOException {
         try (FileInputStream fis = new FileInputStream(arquivo)) {
             byte[] buffer = new byte[(int) arquivo.length()];
@@ -138,7 +182,13 @@ public class GerenciadorArquivos {
         }
     }
 
-    // --- Parse linhas para objetos ---
+    /**
+     * Converte uma linha de texto representando uma receita em um objeto
+     * Receita. A linha deve estar no formato: RECEITA;valor;data;categoria
+     *
+     * @param linha Linha do arquivo representando uma receita.
+     * @return Objeto Receita ou null se a linha for inválida.
+     */
     private Receita parseReceita(String linha) {
         try {
             String[] campos = linha.split(";");
@@ -155,6 +205,13 @@ public class GerenciadorArquivos {
         }
     }
 
+    /**
+     * Converte uma linha de texto representando uma despesa em um objeto
+     * Despesa. A linha deve estar no formato: DESPESA;valor;data;categoria
+     *
+     * @param linha Linha do arquivo representando uma despesa.
+     * @return Objeto Despesa ou null se a linha for inválida.
+     */
     private Despesa parseDespesa(String linha) {
         try {
             String[] campos = linha.split(";");

@@ -21,14 +21,29 @@ public enum CategoriasDespesas {
     
     private final String descricao;
 
+    /**
+     * Construtor do enum que define a descrição legível da categoria.
+     * 
+     * @param descricao Descrição da categoria de despesa.
+     */
     CategoriasDespesas(String descricao) {
         this.descricao = descricao;
     }
 
+     /**
+     * Retorna a descrição da categoria.
+     * 
+     * @return descrição legível da categoria.
+     */
     public String getDescricao() {
         return descricao;
     }
 
+    /**
+     * Retorna a descrição da categoria ao invés do nome do enum.
+     * 
+     * @return descrição legível da categoria.
+     */
     @Override
     public String toString() {
         return descricao;

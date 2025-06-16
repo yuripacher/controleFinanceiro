@@ -1,4 +1,3 @@
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -15,7 +14,9 @@ import java.time.format.DateTimeFormatter;
  */
 public class Despesa extends Lancamento {
 
-    // Atributo privado para o tipo de despesa
+    /**
+     * Atributo privado para o tipo de despesa
+     */
     private CategoriasDespesas tipo;
 
     /**
@@ -30,19 +31,28 @@ public class Despesa extends Lancamento {
         setTipo(tipo);
     }
 
-    // Getter para tipo
+    /**
+     * Getter para tipo
+     *
+     * @return tipo
+     */
     public CategoriasDespesas getTipo() {
         return tipo;
     }
 
-    // Setter para tipo
+    /**
+     * Setter para tipo
+     *
+     * @param tipo
+     */
     public void setTipo(CategoriasDespesas tipo) {
         this.tipo = tipo;
     }
 
     /**
-     * Método toString que inclui o tipo da despesa.
-     * Valor negativo com sinal -
+     * Método toString que retorna a forma que a despesa será apresentada
+     * Valor terá o sinal de negativo, identificando que é uma despesa
+     * @return String formatada com valor e data do lançamento.
      */
     @Override
     public String toString() {

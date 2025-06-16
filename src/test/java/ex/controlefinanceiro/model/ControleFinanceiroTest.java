@@ -9,10 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
 
 /**
  *
- * @author ADM
+ * @author MKB e YPR
  */
 public class ControleFinanceiroTest {
 
@@ -20,6 +21,12 @@ public class ControleFinanceiroTest {
     private LocalDate data;
 
     public ControleFinanceiroTest() {
+    }
+
+    @BeforeEach
+    public void setup() {
+        controle = new ControleFinanceiro(new MockGerenciadorArquivos());
+        data = LocalDate.of(2025, 6, 15);
     }
 
     public class MockGerenciadorArquivos extends GerenciadorArquivos {
@@ -47,28 +54,68 @@ public class ControleFinanceiroTest {
 
     @Test
     public void testeIncluirReceitaValida() {
-        ControleFinanceiro controle = new ControleFinanceiro(new MockGerenciadorArquivos());
 
         boolean resultado = controle.incluirReceita(100.0, LocalDate.of(2025, 6, 15), CategoriasReceitas.SALARIO);
 
         assertTrue(resultado);
         assertEquals(1, controle.getReceitas().size());
     }
+    
+    @Test
+    public void testeIncluirReceitaComValorNegativo() {
+
+        boolean resultado = controle.incluirReceita(-100.0, LocalDate.of(2025, 6, 15), CategoriasReceitas.SALARIO);
+
+        assertFalse(resultado);
+        assertEquals(0, controle.getReceitas().size());
+    }
+    
+     @Test
+    public void testeIncluirReceitaComValorZero() {
+        boolean resultado = controle.incluirReceita(0.0, data, CategoriasReceitas.SALARIO);
+        assertFalse(resultado);
+        assertEquals(0, controle.getReceitas().size());
+    }
 
     @Test
-    public void testeIncluirDespesaInvalida() {
-        ControleFinanceiro controle = new ControleFinanceiro(new MockGerenciadorArquivos());
+    public void testeIncluirReceitaComDataNula() {
+        boolean resultado = controle.incluirReceita(100.0, null, CategoriasReceitas.SALARIO);
+        assertFalse(resultado);
+        assertEquals(0, controle.getReceitas().size());
+    }
 
+    @Test
+    public void testeIncluirDespesaValida() {
+        boolean resultado = controle.incluirDespesa(50.0, LocalDate.of(2025, 6, 15), CategoriasDespesas.ALIMENTACAO);
+
+        assertTrue(resultado);
+        assertEquals(1, controle.getDespesas().size());
+    }
+    
+    @Test
+    public void testeIncluirDespesaComValorNegativo() {
         boolean resultado = controle.incluirDespesa(-50.0, LocalDate.of(2025, 6, 15), CategoriasDespesas.ALIMENTACAO);
 
+        assertFalse(resultado);
+        assertEquals(0, controle.getDespesas().size());
+    }
+    
+     @Test
+    public void testeIncluirDespesaComValorZero() {
+        boolean resultado = controle.incluirDespesa(0.0, data, CategoriasDespesas.ALIMENTACAO);
+        assertFalse(resultado);
+        assertEquals(0, controle.getDespesas().size());
+    }
+     
+    @Test
+    public void testeIncluirDespesaComDataNula() {
+        boolean resultado = controle.incluirDespesa(50.0, null, CategoriasDespesas.ALIMENTACAO);
         assertFalse(resultado);
         assertEquals(0, controle.getDespesas().size());
     }
 
     @Test
     public void testeConsultarSaldo() {
-        ControleFinanceiro controle = new ControleFinanceiro(new MockGerenciadorArquivos());
-
         controle.incluirReceita(500.0, LocalDate.of(2025, 6, 1), CategoriasReceitas.SALARIO);
         controle.incluirDespesa(150.0, LocalDate.of(2025, 6, 2), CategoriasDespesas.ALIMENTACAO);
 
@@ -81,22 +128,34 @@ public class ControleFinanceiroTest {
 
     @Test
     public void testeGerarExtratoComLancamentos() {
-        ControleFinanceiro controle = new ControleFinanceiro(new MockGerenciadorArquivos());
-
         controle.incluirReceita(100.0, LocalDate.of(2025, 6, 10), CategoriasReceitas.SALARIO);
         controle.incluirDespesa(50.0, LocalDate.of(2025, 6, 11), CategoriasDespesas.ALIMENTACAO);
 
         List<String> extrato = controle.gerarExtrato(LocalDate.of(2025, 6, 9), LocalDate.of(2025, 6, 12));
 
         assertEquals(2, extrato.size());
-        assertTrue(extrato.get(0).contains("RECEITA"));
-        assertTrue(extrato.get(1).contains("DESPESA"));
+        System.out.println(extrato);
+        assertTrue(extrato.get(0).contains("RECEITA - "));
+        assertTrue(extrato.get(1).contains("DESPESA - "));
+    }
+    
+    @Test
+    public void testeGerarExtratoVazio() {
+        List<String> extrato = controle.gerarExtrato(LocalDate.of(2025, 6, 1), LocalDate.of(2025, 6, 30));
+        assertTrue(extrato.isEmpty());
+    }
+    
+    @Test
+    public void testeGerarExtratoComPeriodoSemLancamentos() {
+        controle.incluirReceita(100.0, LocalDate.of(2025, 5, 1), CategoriasReceitas.SALARIO);
+        controle.incluirDespesa(50.0, LocalDate.of(2025, 5, 2), CategoriasDespesas.ALIMENTACAO);
+
+        List<String> extrato = controle.gerarExtrato(LocalDate.of(2025, 6, 1), LocalDate.of(2025, 6, 30));
+        assertTrue(extrato.isEmpty());
     }
 
     @Test
     public void testeTotalReceitasDespesas() {
-        ControleFinanceiro controle = new ControleFinanceiro(new MockGerenciadorArquivos());
-
         controle.incluirReceita(200.0, LocalDate.of(2025, 6, 1), CategoriasReceitas.SALARIO);
         controle.incluirReceita(300.0, LocalDate.of(2025, 6, 2), CategoriasReceitas.OUTRAS_RECEITAS);
 
@@ -108,8 +167,6 @@ public class ControleFinanceiroTest {
 
     @Test
     public void testeListarTodosLancamentosOrdenado() {
-        ControleFinanceiro controle = new ControleFinanceiro(new MockGerenciadorArquivos());
-
         controle.incluirDespesa(100, LocalDate.of(2025, 6, 20), CategoriasDespesas.SAUDE);
         controle.incluirReceita(200, LocalDate.of(2025, 6, 10), CategoriasReceitas.SALARIO);
 

@@ -14,7 +14,9 @@ import java.time.format.DateTimeFormatter;
  */
 public class Receita extends Lancamento {
 
-    // Atributo privado para o tipo de receita
+    /**
+     * Atributo privado para o tipo de receita
+     */
     private CategoriasReceitas tipo;
 
     /**
@@ -29,18 +31,28 @@ public class Receita extends Lancamento {
         setTipo(tipo);
     }
 
-    // Getter para tipo
+    /**
+     * Getter para tipo
+     *
+     * @return tipo
+     */
     public CategoriasReceitas getTipo() {
         return tipo;
     }
 
-    // Setter para tipo
+    /**
+     * Setter para tipo
+     *
+     * @param tipo
+     */
     public void setTipo(CategoriasReceitas tipo) {
         this.tipo = tipo;
     }
 
     /**
-     * Método toString que inclui o tipo da receita.
+     * Método toString que retorna a forma que a receita será apresentada
+     * 
+     * @return String formatada com valor e data do lançamento.
      */
     @Override
     public String toString() {

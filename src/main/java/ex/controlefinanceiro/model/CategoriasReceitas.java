@@ -6,7 +6,7 @@ package ex.controlefinanceiro.model;
 
 /**
  * Enum que define as categorias de receitas disponíveis no sistema.
- * 
+ *
  * @author MKB e YPR
  */
 public enum CategoriasReceitas {
@@ -20,14 +20,29 @@ public enum CategoriasReceitas {
 
     private final String descricao;
 
+    /**
+     * Construtor do enum que define a descrição legível da categoria.
+     *
+     * @param descricao Descrição da categoria de receita.
+     */
     CategoriasReceitas(String descricao) {
         this.descricao = descricao;
     }
 
+    /**
+     * Retorna a descrição da categoria.
+     *
+     * @return descrição legível da categoria.
+     */
     public String getDescricao() {
         return descricao;
     }
 
+    /**
+     * Retorna a descrição da categoria ao invés do nome do enum.
+     *
+     * @return descrição legível da categoria.
+     */
     @Override
     public String toString() {
         return descricao;
